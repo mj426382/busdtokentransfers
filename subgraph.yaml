@@ -1,4 +1,4 @@
-specVersion: 0.0.1
+specVersion: 0.0.2
 schema:
   file: ./schema.graphql
 dataSources:
@@ -6,21 +6,48 @@ dataSources:
     name: BusdToken
     network: mainnet
     source:
-      address: "0x4Fabb145d64652a948d72533023f6E7A623C7C53"
-      abi: BusdToken
+      address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      abi: BUSD
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - AdminChanged
-        - Upgraded
+        - Issue
+        - Redeem
+        - Deprecate
+        - Params
+        - DestroyedBlackFunds
+        - AddedBlackList
+        - RemovedBlackList
+        - Approval
+        - Transfer
+        - Pause
+        - Unpause
       abis:
-        - name: BusdToken
+        - name: BUSD
           file: ./abis/BusdToken.json
       eventHandlers:
-        - event: AdminChanged(address,address)
-          handler: handleAdminChanged
-        - event: Upgraded(address)
-          handler: handleUpgraded
+        - event: Issue(uint256)
+          handler: handleIssue
+        - event: Redeem(uint256)
+          handler: handleRedeem
+        - event: Deprecate(address)
+          handler: handleDeprecate
+        - event: Params(uint256,uint256)
+          handler: handleParams
+        - event: DestroyedBlackFunds(address,uint256)
+          handler: handleDestroyedBlackFunds
+        - event: AddedBlackList(address)
+          handler: handleAddedBlackList
+        - event: RemovedBlackList(address)
+          handler: handleRemovedBlackList
+        - event: Approval(indexed address,indexed address,uint256)
+          handler: handleApproval
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+        - event: Pause()
+          handler: handlePause
+        - event: Unpause()
+          handler: handleUnpause
       file: ./src/mapping.ts
